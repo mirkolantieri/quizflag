@@ -1,5 +1,6 @@
 package com.mirko.quizflag
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +19,8 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
     private var mCurrentPosition: Int = 1
     private var mQuestionsList: ArrayList<Question>? = null
     private var mSelectedOptionPosition: Int = 0
+    private var mUsername: String? = null
+    private var mCorrectAns: Int = 0
 
     private var progressBar: ProgressBar? = null
     private var tvProgress: TextView? = null
@@ -34,6 +37,9 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quiz_questions)
+
+// here we retrieve the username passed in the main activity from the getStringExtra()
+        mUsername = intent.getStringExtra(Constants.USERNAME)
 
         progressBar = findViewById(R.id.progressBar)
         tvProgress = findViewById(R.id.tv_progress)
@@ -155,15 +161,23 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
                             setQuestion()
                         }
                         else -> {
-                            Toast.makeText(this, "You Made it!", Toast.LENGTH_LONG)
+//                            Toast.makeText(this, "You Made it!", Toast.LENGTH_LONG).show()
+                            val intent = Intent(this, ResultActivity::class.java)
+                            intent.putExtra(Constants.USERNAME, mUsername)
+                            intent.putExtra(Constants.CORRECT_ANS, mCorrectAns)
+                            intent.putExtra(Constants.TOT_QUESTIONS, mQuestionsList?.size)
+                            startActivity(intent)
+                            finish()
                         }
                     }
-                }else {
+                } else {
                     // set the current question
                     val question = mQuestionsList?.get(mCurrentPosition - 1)
-                    if (question!!.correctAnswer != mSelectedOptionPosition){
-                    //  set the wrong answer
+                    if (question!!.correctAnswer != mSelectedOptionPosition) {
+                        //  set the wrong answer
                         answerView(mSelectedOptionPosition, R.drawable.wrong_option_border_bg)
+                    } else {
+                        mCorrectAns++
                     }
                     answerView(question.correctAnswer, R.drawable.correct_option_border_bg)
 

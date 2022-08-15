@@ -28,7 +28,11 @@ class MainActivity : AppCompatActivity() {
             * the new page where it will contain the next activity layout
             * */
                 val intent: Intent = Intent(this, QuizQuestionsActivity::class.java)
+//                push additional data from the activity
+//                that's being started on an intent
+                intent.putExtra(Constants.USERNAME, etName.text.toString())
                 startActivity(intent)
+                finish()
 //              finish() - here the method can close the app once the activity is completed
             }
 

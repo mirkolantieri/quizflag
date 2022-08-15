@@ -11,6 +11,11 @@ package com.mirko.quizflag
 
 object Constants {
 
+    const val USERNAME: String = "username"
+    const val TOT_QUESTIONS: String = "total questions"
+    const val CORRECT_ANS: String = "Correct answers"
+
+
     fun getQuestions(): ArrayList<Question> {
 //        this method returns an ArrayList of
 //        Question(s) which are created as list
@@ -68,7 +73,7 @@ object Constants {
             R.drawable.ic_flag_usa,
             "Canada", "United States of America",
             "Mexico", "Cuba",
-            4
+            2
         )
 
         questionsList.add(que1)
